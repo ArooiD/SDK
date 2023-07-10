@@ -1,5 +1,5 @@
-# SDK
+#SDKPpma для Ios
 
-A description of this package.
-
-This is a test desription
+Библиотека для взаимодействия платформами: 
+<ppma.ru>
+<test.ppma.ru>
