@@ -17,19 +17,19 @@ public class ConnectClass{
     
     internal var bleManager: BLEManager?
     
-    init() {
+    public init() {
         bleManager = BLEManager.getSharedBLEManager()
     }
     
-    init(cred: String) {
+    public init(cred: String) {
         self.cred = cred
     }
     
-    init(outCallback: DeviceCallback){
+    public init(outCallback: DeviceCallback){
         callback = outCallback
     }
     
-    init(outCallback: DeviceCallback, cred: String){
+    public init(outCallback: DeviceCallback, cred: String){
         callback = outCallback
         self.cred = cred
     }

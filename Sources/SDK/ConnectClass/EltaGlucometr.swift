@@ -15,7 +15,6 @@ public class EltaGlucometr:
     ServicesDiscoveryDelegate,
     ReadWirteCharteristicDelegate{
     
-    
     internal var _identifer: UUID?
 
     internal var peripherals: [DisplayPeripheral] = []
@@ -34,17 +33,10 @@ public class EltaGlucometr:
     
     public static var lastDateMeasurements: Date? = nil
     
-    public static let  FormatPlatformTime: ISO8601DateFormatter = {
+    public static let FormatPlatformTime: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.formatOptions = [.withInternetDateTime]
-        
-        
-        //let dateFormatter = DateFormatter()
-        //2023-07-07T18:22:22+05:00
-        //dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        //dateFormatter.formatOptions = [.withInternetDateTime]
-        //dateFormatter.timeZone = TimeZone.current
         return dateFormatter
     }()
     
