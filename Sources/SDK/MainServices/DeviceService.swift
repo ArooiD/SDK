@@ -26,8 +26,6 @@ fileprivate class _baseCallback: DeviceCallback {
 
 private var instanceDS: DeviceService? = nil
 
-
-
 ///Основной сервис для взаимодействия с платформой
 public class DeviceService {
     internal var deviceService: DeviceService?
@@ -35,8 +33,6 @@ public class DeviceService {
     internal var _login: String = ""
     
     internal var _password: String = ""
-    
-    private var _tag: String = ""
     
     private var _test: Bool = false
     
@@ -55,7 +51,7 @@ public class DeviceService {
         }
     }
     
-    init(){
+    internal init(){
         BLEManager.getSharedBLEManager().initCentralManager(queue: DispatchQueue.global(), options: nil)
         im = InternetManager(login: _login, password: _password, debug: _test, callback: _callback)
         instanceDS = self
@@ -118,6 +114,7 @@ public class DeviceService {
         self._callback.onStatusDevice(mac: _identifier, status: BluetoothStatus.InvalidDeviceTemplate)
     }
     
+    ///Поиск ble устройств, конечный список записывается в шаблон для подключения
     public func search(connectClass: ConnectClass, timeOut: UInt32){
         DispatchQueue.global().async {
             connectClass.callback = self._callback
@@ -125,15 +122,13 @@ public class DeviceService {
         }
     }
     
-    public func setLogTag(tag: String) {
-        _tag = tag
-    }
-        
+    ///Отправка данных будет производиться на тестовую площадку <test.ppma.ru>
     public func toTest() {
         _test = true
         im = InternetManager(login: _login, password: _password, debug: _test, callback: _callback)
         instanceDS = self
     }
+    ///Отправка данных будет производиться на основную площадку <ppma.ru>
     public func toProd() {
         _test = false
         im = InternetManager(login: _login, password: _password, debug: _test, callback: _callback)
@@ -141,6 +136,7 @@ public class DeviceService {
     }
 }
 
+///Структура для сохранения информации об устройтсве
 public struct DisplayPeripheral: Hashable {
     public var peripheral: CBPeripheral?
     public var lastRSSI: NSNumber?
@@ -160,6 +156,8 @@ public struct DisplayPeripheral: Hashable {
         self.localName = localName
     }
 }
+
+///Структура для сохранения данных об измерениях
 public struct Measurements{
     internal var data: [Atributes: Any] = [:]
     

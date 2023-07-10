@@ -38,7 +38,7 @@ class InternetManager{
         return sharedManager!
     }
     
-    init(login: String, password: String, debug: Bool, callback: DeviceCallback) {
+    internal init(login: String, password: String, debug: Bool, callback: DeviceCallback) {
         let encData: Data = (login + password).data(using: .utf8)!
         self.auth = "Basic ".appending(encData.base64EncodedString())
         apiAddress = "/gateway/iiot/api/Observation/data"
@@ -52,8 +52,6 @@ class InternetManager{
     
     internal func postResource(identifier: UUID, data: Data) {
         var urlRequest: URLRequest = URLRequest(url: self.urlGateWay)
-        //print(self.urlGateWay)
-        //print(data)
         
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("Authorization", forHTTPHeaderField: self.auth)
@@ -101,7 +99,7 @@ class InternetManager{
             }
             if let httpResponse = response as? HTTPURLResponse {
                 let statusCode = httpResponse.statusCode
-                //print("Status Code: \(statusCode)")
+                print("Status Code: \(statusCode)")
             }
             if let responseData = data {
                 if let responseString = String(data: responseData, encoding: .utf8) {

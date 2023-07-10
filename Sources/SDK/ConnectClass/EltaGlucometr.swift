@@ -33,14 +33,15 @@ public class EltaGlucometr:
     
     public static var lastDateMeasurements: Date? = nil
     
-    public static let FormatPlatformTime: ISO8601DateFormatter = {
+    internal static let FormatPlatformTime: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.formatOptions = [.withInternetDateTime]
         return dateFormatter
     }()
     
-    public static let FormatDeviceTime: DateFormatter = {
+    ///Объект для форматирования времени при записи данны
+    internal static let FormatDeviceTime: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "yyMMddHHmmss"
         df.timeZone = TimeZone.current
