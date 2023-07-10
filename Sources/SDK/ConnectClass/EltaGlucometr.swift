@@ -17,7 +17,7 @@ public class EltaGlucometr:
     
     internal var _identifer: UUID?
 
-    internal var peripherals: [DisplayPeripheral] = []
+    public var peripherals: [DisplayPeripheral] = []
     
     static var itter:Int = 0
     

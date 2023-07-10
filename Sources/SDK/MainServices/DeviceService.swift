@@ -142,10 +142,10 @@ public class DeviceService {
 }
 
 public struct DisplayPeripheral: Hashable {
-    var peripheral: CBPeripheral?
-    var lastRSSI: NSNumber?
-    var isConnectable: Bool?
-    var localName: String?
+    public var peripheral: CBPeripheral?
+    public var lastRSSI: NSNumber?
+    public var isConnectable: Bool?
+    public var localName: String?
     
     public func hash(into hasher: inout Hasher) { }
 
@@ -153,7 +153,7 @@ public struct DisplayPeripheral: Hashable {
         if (lhs.peripheral! == rhs.peripheral) { return true }
         else { return false }
     }
-    init(peripheral: CBPeripheral? = nil, lastRSSI: NSNumber? = nil, isConnectable: Bool? = false, localName: String? = nil) {
+    public init(peripheral: CBPeripheral? = nil, lastRSSI: NSNumber? = nil, isConnectable: Bool? = false, localName: String? = nil) {
         self.peripheral = peripheral
         self.lastRSSI = lastRSSI
         self.isConnectable = isConnectable
