@@ -97,7 +97,7 @@ public class EltaGlucometr:
             }
             let isConnectable = advertisementData["kCBAdvDataIsConnectable"] as? Bool
             let localName = peripheral.name!
-            let displayPeripheral: DisplayPeripheral = DisplayPeripheral(peripheral: peripheral, lastRSSI: RSSI, isConnectable: isConnectable, localName: localName)
+            let displayPeripheral: DisplayPeripheral = DisplayPeripheral(peripheral: peripheral, lastRSSI: RSSI, isConnectable: isConnectable!, localName: localName)
             callback?.findDevice(peripheral: displayPeripheral);
             peripherals.append(displayPeripheral)
         }

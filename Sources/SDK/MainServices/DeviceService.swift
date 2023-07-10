@@ -153,6 +153,12 @@ public struct DisplayPeripheral: Hashable {
         if (lhs.peripheral! == rhs.peripheral) { return true }
         else { return false }
     }
+    init(peripheral: CBPeripheral? = nil, lastRSSI: NSNumber? = nil, isConnectable: Bool? = false, localName: String? = nil) {
+        self.peripheral = peripheral
+        self.lastRSSI = lastRSSI
+        self.isConnectable = isConnectable
+        self.localName = localName
+    }
 }
 public struct Measurements{
     internal var data: [Atributes: Any] = [:]
