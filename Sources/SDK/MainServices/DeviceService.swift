@@ -26,6 +26,9 @@ fileprivate class _baseCallback: DeviceCallback {
 
 private var instanceDS: DeviceService? = nil
 
+
+
+///Основной сервис для взаимодействия с платформой
 public class DeviceService {
     internal var deviceService: DeviceService?
     
@@ -41,6 +44,8 @@ public class DeviceService {
     
     private var _callback: DeviceCallback = _baseCallback()
     
+    ///Получение экземпляр класса, если до этого он не был иницирован, создаётся пустой объект с базовыми параметрами.
+    ///При базовой инициализации login и password - пустые строки, функция обратного вызова, в которой отсутсует любая обработка входящий данных
     public static func getInstance() -> DeviceService {
         if(instanceDS == nil) {
             return DeviceService()
@@ -56,6 +61,7 @@ public class DeviceService {
         instanceDS = self
     }
     
+    ///Создание объекта с указанием авторизационных данных и функции обратного вызова для получения текущего состояния работы сервиса
     public init(login: String, password: String, callbackFunction: DeviceCallback){
         BLEManager.getSharedBLEManager().initCentralManager(queue: nil, options: nil)
         _login = login
@@ -65,6 +71,7 @@ public class DeviceService {
         instanceDS = self
     }
     
+    ///Изменение авторизационных данных при работе сервиса
     public func changeCredentials(login: String, password: String){
         _login = login
         _password = password
@@ -72,10 +79,13 @@ public class DeviceService {
         instanceDS = self
     }
     
+    ///Изменение функции обратного вызова
     public func changeCallback(callbackFunction: DeviceCallback){
         _callback = callbackFunction
     }
     
+    ///Организация подключения к устройству.
+    ///При подключение к переферийному устройству, требуется шаблонный класс для подключения и объект найденнного устройства
     public func connectToDevice(connectClass: ConnectClass, device: DisplayPeripheral){
         connectClass.callback = self._callback
         let _identifier: UUID = device.peripheral!.identifier

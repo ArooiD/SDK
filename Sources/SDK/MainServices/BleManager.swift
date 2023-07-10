@@ -8,6 +8,7 @@
 import Foundation
 import CoreBluetooth
 
+
 // DeviceScaningDelegate Protocol: Implements to get scanning devices
 internal protocol DeviceScaningDelegate: AnyObject{
     func scanningStatus(status: Int)
