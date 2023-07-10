@@ -58,83 +58,83 @@ internal class DeviceBleManager :
     }
     
     //ConnectionDelegates
-    func bleManagerConnectionFail (_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+    internal func bleManagerConnectionFail (_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         print(peripheral)
         print(error!)
     }
     
-    func bleManagerDidConnect(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+    internal func bleManagerDidConnect(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print(peripheral)
     }
     
-    func bleManagerDisConect(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+    internal func bleManagerDisConect(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print(peripheral)
         print(error!)
     }
     
     //ServiceDiscoverDelegate
-    func bleManagerDiscoverService (_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+    internal func bleManagerDiscoverService (_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         print(peripheral)
         print(error!)
     }
     
-    func bleManagerDiscoverCharacteristics (_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?){
+    internal func bleManagerDiscoverCharacteristics (_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?){
         print(peripheral)
         print(service)
         print(error!)
     }
     
-    func bleManagerDiscoverDescriptors (_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?){
+    internal func bleManagerDiscoverDescriptors (_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?){
         print(peripheral)
         print(characteristic)
         print(error!)
     }
     
-    func bleManagerDidUpdateValueForChar(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+    internal func bleManagerDidUpdateValueForChar(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print(peripheral)
         print(characteristic)
         print(error!)
     }
     
-    func bleManagerDidWriteValueForChar(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+    internal func bleManagerDidWriteValueForChar(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         print(peripheral)
         print(characteristic)
         print(error!)
     }
     
-    func bleManagerDidUpdateValueForDesc(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
+    internal func bleManagerDidUpdateValueForDesc(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
         print(peripheral)
         print(descriptor)
         print(error!)
     }
     
-    func bleManagerDidWriteValueForDesc(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?){
+    internal func bleManagerDidWriteValueForDesc(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?){
         print(peripheral)
         print(descriptor)
         print(error!)
     }
     
-    func bleManagerDidUpdateNotificationState(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+    internal func bleManagerDidUpdateNotificationState(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         print(peripheral)
         print(characteristic)
         print(error!)
     }
     
-    func postBLEConnectionStatus(status:Int) {
+    internal func postBLEConnectionStatus(status:Int) {
         print(status)
     }
     
-    func postScannedDevices(scannedDevices: NSArray){
+    internal func postScannedDevices(scannedDevices: NSArray){
 
     }
     
-    func bleManagerReadRSSIValue(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
+    internal func bleManagerReadRSSIValue(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
         print(peripheral)
         print(RSSI)
         print(error!)
     }
     
-    struct ScanedDevice: Hashable{
+    internal struct ScanedDevice: Hashable{
         var deviceName: String
         var deviceObject: CBPeripheral
     }

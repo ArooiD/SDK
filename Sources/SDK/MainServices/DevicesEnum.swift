@@ -7,6 +7,7 @@
 
 import Foundation
 
+///Статусы при работе с перефирийными устройствами
 public enum BluetoothStatus{
     case ConnectStart
     
@@ -23,6 +24,7 @@ public enum BluetoothStatus{
     case InvalidDeviceTemplate
 }
 
+///Статусы при отправке данных на платформу
 public enum PlatformStatus{
     case Success
     
@@ -33,26 +35,28 @@ public enum PlatformStatus{
     case DataCashed
 }
 
+///Атрибуты при собираемых данных
 public enum Atributes : String{
+    ///Серийный номер устройства, объект String
     case SerialNumber
-    
+    ///Уровень батареи, объект Integer
     case BatteryLevel
-    
+    ///Температура в кельвинах, объект Integer
     case TemperatureLevel
-    
+    ///Время когда было сделано измерения, объект Date
     case TimeStamp
     
     case Temperature
-    
+    ///Показатель глюкозы в крови
     case Glucose
-    
+    ///Объект измерений
     case Measurements
-    
+    ///Модель устройства, объект String
     case ModelNumber
     
-    case Systolic
+    //case Systolic
     
-    case Diastolic
+    //case Diastolic
     
-    case HeartRat
+    //case HeartRat
 }
