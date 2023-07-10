@@ -26,6 +26,7 @@ internal struct Collector{
     internal func returnCharateristic(atribute: Atributes) -> Any?{
         return charateristic[atribute]
     }
+    
     internal func returnMeasurements() -> Array<Measurements>{
         return measurements
     }

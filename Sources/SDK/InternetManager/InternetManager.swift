@@ -31,7 +31,7 @@ class InternetManager{
     
     internal var callback: DeviceCallback
     
-    static func getManager () -> InternetManager {
+    static internal func getManager () -> InternetManager {
         if sharedManager == nil {
             sharedManager = InternetManager(login: "", password: "", debug: true, callback: _baseCallback())
         }
@@ -50,7 +50,7 @@ class InternetManager{
         sharedManager = self
     }
     
-    func postResource(identifier: UUID, data: Data) {
+    internal func postResource(identifier: UUID, data: Data) {
         var urlRequest: URLRequest = URLRequest(url: self.urlGateWay)
         //print(self.urlGateWay)
         //print(data)
@@ -87,7 +87,7 @@ class InternetManager{
         task.resume()
     }
     
-    func getTime(serial: String){
+    internal func getTime(serial: String){
         let timeUrl  = URL(string: (self.baseAddress + self.apiAddress + "?serial=\(serial)&type=effectiveDateTime"))!
         var urlRequest: URLRequest = URLRequest(url: timeUrl)
         urlRequest.httpMethod = "GET"

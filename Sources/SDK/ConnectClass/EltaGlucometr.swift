@@ -21,13 +21,13 @@ public class EltaGlucometr:
     
     static var itter:Int = 0
     
-    var rxtxService: CBService?
+    internal var rxtxService: CBService?
     
-    var rxCharacteistic: CBCharacteristic?
+    internal var rxCharacteistic: CBCharacteristic?
     
-    var txCharacteistic: CBCharacteristic?
+    internal var txCharacteistic: CBCharacteristic?
     
-    var internetManager: InternetManager = InternetManager.getManager()
+    internal var internetManager: InternetManager = InternetManager.getManager()
     
     internal var measurements: Collector?
     
@@ -47,7 +47,7 @@ public class EltaGlucometr:
         return df
     }()
     
-    let manager: BLEManager = {
+    internal let manager: BLEManager = {
         return BLEManager.getSharedBLEManager()
     }()
     
@@ -74,11 +74,11 @@ public class EltaGlucometr:
     }
     
     //DeviceScaningDelegate
-    func scanningStatus(status: Int) {
+    internal func scanningStatus(status: Int) {
         print(status)
     }
     
-    func bleManagerDiscover(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    internal func bleManagerDiscover(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         if(peripheral.name != nil){
             for (index, foundPeripheral) in peripherals.enumerated() {
                 if foundPeripheral.peripheral?.identifier == peripheral.identifier {
@@ -96,12 +96,12 @@ public class EltaGlucometr:
     }
     
     //DeviceConnectingDelegate
-    func bleManagerConnectionFail(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+    internal func bleManagerConnectionFail(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         callback?.onExpection(mac: _identifer!, ex: error!)
     }
     
     // This method will be triggered once device will be connected.
-    func bleManagerDidConnect(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+    internal func bleManagerDidConnect(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         manager.discoveryDelegate = self
         manager.readWriteCharDelegate = self
         callback?.onStatusDevice(mac: _identifer!, status: BluetoothStatus.ConnectStart)
@@ -111,7 +111,7 @@ public class EltaGlucometr:
     }
     
     // This method will be triggered once device will be disconnected.
-    func bleManagerDisConect(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+    internal func bleManagerDisConect(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         callback?.onStatusDevice(mac: _identifer!, status: BluetoothStatus.ConnectDisconnect)
         let ret = self.measurements?.returnData()
         callback?.onDisconnect(mac: peripheral.identifier, data: ret!)
@@ -138,7 +138,7 @@ public class EltaGlucometr:
     }
     
     //ReadWirteCharteristicDelegate
-    func bleManagerDidUpdateValueForChar(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?){
+    internal func bleManagerDidUpdateValueForChar(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?){
         if let resultStr = String(data: characteristic.value!, encoding: .utf8) {
             if(resultStr.contains("enter pincode first")){
                 callback?.onStatusDevice(mac: peripheral.identifier, status: BluetoothStatus.NotCorrectPin)
@@ -190,17 +190,17 @@ public class EltaGlucometr:
         }
     }
     
-    func bleManagerDidWriteValueForChar(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?){ }
+    internal func bleManagerDidWriteValueForChar(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?){ }
     
-    func bleManagerDidUpdateValueForDesc(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?){}
+    internal func bleManagerDidUpdateValueForDesc(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?){}
     
-    func bleManagerDidWriteValueForDesc(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?){}
+    internal func bleManagerDidWriteValueForDesc(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?){}
 
     //Обработчик:
-    func bleManagerDidUpdateNotificationState(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?){ }
+    internal func bleManagerDidUpdateNotificationState(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?){ }
     
     //ServicesDiscoveryDelegate
-    func bleManagerDiscoverService (_ peripheral: CBPeripheral, didDiscoverServices error: Error?)
+    internal func bleManagerDiscoverService (_ peripheral: CBPeripheral, didDiscoverServices error: Error?)
     {
         if let services = peripheral.services {
             for service in services {
@@ -210,7 +210,7 @@ public class EltaGlucometr:
             print("No services found")
         }
     }
-    func bleManagerDiscoverCharacteristics (_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?)
+    internal func bleManagerDiscoverCharacteristics (_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?)
     {
         rxtxService = service
         rxCharacteistic = rxtxService!.characteristics![0]
@@ -223,37 +223,41 @@ public class EltaGlucometr:
         getBattery(device: peripheral)
         getRDS(device: peripheral)
     }
-    func bleManagerDiscoverDescriptors(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?)
+    internal func bleManagerDiscoverDescriptors(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?)
     {
         print("bleManagerDiscoverDescriptors")
     }
     
-    func setPin(device: CBPeripheral){
+    internal func setPin(device: CBPeripheral){
         let response: Data = ("pin."+cred!).data(using: .utf8)!
         manager.writeCharacteristicValue(peripheral: device, data: response, char: rxCharacteistic!, type: CBCharacteristicWriteType.withResponse)
     }
     
-    func getRDS(device: CBPeripheral){
+    internal func getRDS(device: CBPeripheral){
         let response: Data = String(format: "rd.%03dd", EltaGlucometr.itter).data(using: .utf8)!
         manager.writeCharacteristicValue(peripheral: device, data: response, char: rxCharacteistic!, type: CBCharacteristicWriteType.withResponse)
     }
-    func getDisplay(device: CBPeripheral){
+    
+    internal func getDisplay(device: CBPeripheral){
         let modelNumber = "SatelliteOnline"
         self.measurements!.addInfo(atr: Atributes.ModelNumber, value: modelNumber)
         callback?.onExploreDevice(mac: device.identifier, atr: Atributes.ModelNumber, value: modelNumber)
     }
-    func getSerial(device: CBPeripheral){
+    
+    internal func getSerial(device: CBPeripheral){
         let response: Data = String("serial").data(using: .utf8)!
         manager.writeCharacteristicValue(peripheral: device, data: response, char: rxCharacteistic!, type: CBCharacteristicWriteType.withResponse)
     }
-    func setTime(device: CBPeripheral){
+    
+    internal func setTime(device: CBPeripheral){
         let timeNow = Date()
         let time = EltaGlucometr.FormatDeviceTime.string(from: timeNow)
         print("Settime: " + time)
         let response: Data = String("settime." + time).data(using: .utf8)!
         manager.writeCharacteristicValue(peripheral: device, data: response, char: rxCharacteistic!, type: CBCharacteristicWriteType.withResponse)
     }
-    func getBattery(device: CBPeripheral){
+    
+    internal func getBattery(device: CBPeripheral){
         let response: Data = String("bat").data(using: .utf8)!
         manager.writeCharacteristicValue(peripheral: device, data: response, char: rxCharacteistic!, type: CBCharacteristicWriteType.withResponse)
     }

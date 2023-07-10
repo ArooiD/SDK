@@ -8,9 +8,9 @@ internal class DeviceBleManager :
     ReadWirteCharteristicDelegate,
     ReadRSSIValueDelegate
 {
-    var manager:BLEManager = BLEManager.getSharedBLEManager()
+    internal var manager:BLEManager = BLEManager.getSharedBLEManager()
     
-    var scanedDevice: Set<ScanedDevice> = []
+    internal var scanedDevice: Set<ScanedDevice> = []
     
     init(){
         manager.initCentralManager(queue: DispatchQueue.main, options: nil)
@@ -21,7 +21,7 @@ internal class DeviceBleManager :
         manager.readRSSIdelegate      = self    //ReadRSSIValueDelegate
     }
     
-    func scanDevices(){
+    internal func scanDevices(){
         print("Start Scan")
         scanedDevice.removeAll()
         manager.scanAllDevices()
@@ -35,26 +35,22 @@ internal class DeviceBleManager :
         }
     }
     
-    func connectDevice(name: String){
+    internal func connectDevice(name: String){
         if let device: CBPeripheral = self.scanedDevice.first(where: { $0.deviceName.starts(with: name) })?.deviceObject {
             manager.connectPeripheralDevice(peripheral: device, options: nil)
         }
     }
     
-    
-    func dirrectConnect(){
+    internal func dirrectConnect(){
         manager.centralManager?.scanForPeripherals(withServices: nil, options: nil)
     }
     
-    
-    
-    
     //ScanningDelegates:
-    func scanningStatus(status: Int) {
+    internal func scanningStatus(status: Int) {
             print(status)
     }
     
-    func bleManagerDiscover(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber){
+    internal func bleManagerDiscover(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber){
         print("deviceDiscover")
         if let deviceName = peripheral.name {
             scanedDevice.insert(ScanedDevice(deviceName: deviceName, deviceObject: peripheral) )
